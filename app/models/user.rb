@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
     validates :profile, presence: true, on: :update, length: { maximum: 200 }
     validates :password, presence: true, length: { minimum: 4, maximum: 16 }
     validates :password_confirmation, presence: true
+    has_many :microposts
 end
