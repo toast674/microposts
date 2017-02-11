@@ -1,4 +1,2 @@
-<% @user.following_users.each do |user| %>
-<div><%= gravatar_for @user %></div>
-<div><%= user.name %></div>
-<% end %>
+<h1>フォロー一覧</h1>
+<%= render @users %>

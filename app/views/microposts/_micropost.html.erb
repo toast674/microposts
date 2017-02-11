@@ -8,4 +8,5 @@
           <%= link_to "delete", micropost, method: :delete, data: { confirm: "You sure?" } %>
         <% end %>
     </span>
+    <%= render 'users/like_form', micropost: micropost if logged_in? %>
 </li>

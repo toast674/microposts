@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
                                         foreign_key: "followed_id",
                                         dependent: :destroy
     has_many :follower_users, through: :follower_relationships, source: :follower
+    has_many :likes, dependent: :destroy
+    has_many :like_microposts, through: :likes, source: :micropost
     # 他のユーザーをフォローする
     def follow(other_user)
         following_relationships.find_or_create_by(followed_id: other_user.id)
@@ -33,6 +35,22 @@ class User < ActiveRecord::Base
     # あるユーザーをフォローしているかどうか？
     def following?(other_user)
         following_users.include?(other_user)
+    end
+    
+    #他の投稿をお気に入り登録する※
+    def like(micropost)
+        likes.find_or_create_by(micropost_id: micropost.id)
+    end
+  
+    #お気に入りを解除する※
+    def unlike(micropost)    
+        like = likes.find_by(micropost_id: micropost.id)
+        like.destroy if like 
+    end
+    
+    # ある投稿をお気に入りしているかどうか？
+    def like?(micropost)
+        like_microposts.include?(micropost)
     end
     
     def feed_items

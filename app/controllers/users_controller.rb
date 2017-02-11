@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   
+  before_action :set_user, only: [:edit, :update, :show, :followings, :followers]
+  
   def show
-    @user = User.find(params[:id])
+    # @user = User.find(params[:id])
     @microposts = @user.microposts.order(created_at: :desc)
   end
   
@@ -34,13 +36,16 @@ class UsersController < ApplicationController
   end
   
   def followings 
-    @user = User.find(params[:id])
-    @followings = @user.following_users
+    @users = @user.following_users
   end
   
-  def followers 
+  def followers
+    @users = @user.follower_users
+  end
+  
+  def like
     @user = User.find(params[:id])
-    @followers = @user.follower_users
+    @like_microposts = @user.like_microposts
   end
 
   private
